@@ -31,7 +31,7 @@ const LoadingScreen = ({ onLoaded }) => {
 
   const handleEnter = () => {
     setFadeOut(true);
-    setTimeout(() => onLoaded(), 100); // ✅ Slightly faster transition
+    setTimeout(() => onLoaded(), 800); // ✅ Slightly faster transition
   };
 
   return (

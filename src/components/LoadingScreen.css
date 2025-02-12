@@ -5,7 +5,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: #0f1f35;
+    background: #050816;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,20 +14,12 @@
     z-index: 1000;
 }
 
+/* Fade-out effect for loading transition */
 .fade-out {
     opacity: 0;
     pointer-events: none;
 }
 
-/* ✅ Space-Themed Background */
-.space-background {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url("./space-background.png") center/cover no-repeat;
-    opacity: 0.3;
-    z-index: -1;
-}
 
 /* ✅ Centering All Content */
 .loading-content {
