@@ -30,8 +30,8 @@ function App() {
             maxPolarAngle={1.3}
             minAzimuthAngle={0}
             maxAzimuthAngle={Math.PI / 2}
-            minDistance={20} 
-            maxDistance={1050}
+            minDistance={10} 
+            maxDistance={200}
             enablePan={false}
           />
         </Canvas>
