@@ -1,0 +1,124 @@
+/* Full-Screen Loading Background */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0f1f35;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1s ease-in-out;
+    z-index: 1000;
+}
+
+.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ✅ Space-Themed Background */
+.space-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("./space-background.png") center/cover no-repeat;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* ✅ Centering All Content */
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Portfolio Title */
+.portfolio-title {
+    font-size: 36px;
+    color: #fff;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-family: "Orbitron", sans-serif;
+    animation: flicker 2s infinite alternate;
+    text-align: center;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.8; text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6); }
+    100% { opacity: 1; text-shadow: 0px 0px 15px rgba(255, 255, 255, 1); }
+}
+
+/* ✅ Centered Loading Text */
+h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: white;
+    animation: pulse 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* ✅ Sci-Fi Brick Loading Bar */
+.brick-loading-bar {
+    font-size: 20px;
+    font-family: "Courier New", monospace;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    width: 300px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
+    margin-top: 10px; /* ✅ Ensures spacing from text */
+}
+
+.brick {
+    margin-right: 2px;
+    color: #ffcc00;
+    text-shadow: 0px 0px 5px rgba(255, 204, 0, 0.8);
+}
+
+/* ✅ Futuristic Enter Button */
+.enter-button {
+    font-size: 22px;
+    font-weight: bold;
+    padding: 15px 40px;
+    color: white;
+    background: linear-gradient(90deg, #ffcc00, #ff8800);
+    border: 2px solid #ffaa00;
+    border-radius: 50px;
+    cursor: pointer;
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+    font-family: "Orbitron", sans-serif;
+    box-shadow: 0px 0px 20px rgba(255, 165, 0, 0.7);
+    transition: all 0.3s ease-in-out;
+    animation: button-glow 1.5s infinite alternate ease-in-out;
+    margin-top: 30px; /* ✅ Adds space between loading bar & button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 2px;
+}
+
+.enter-button:hover {
+    background: linear-gradient(90deg, #ffaa00, #ff6600);
+    transform: scale(1.08);
+    box-shadow: 0px 0px 30px rgba(255, 165, 0, 1);
+}
+
+@keyframes button-glow {
+    0% { box-shadow: 0px 0px 10px rgba(255, 165, 0, 0.5); }
+    100% { box-shadow: 0px 0px 25px rgba(255, 165, 0, 1); }
+}
