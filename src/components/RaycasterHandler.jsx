@@ -1,6 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import PrinterView from "./PrinterView";
+
 
 const SCREEN_TO_PARENT_MAP = {
   'retro_tv_screen': 'retro_tv',
@@ -39,24 +41,25 @@ function findInteractableObject(object) {
   return null;
 }
 
-function RaycasterHandler({ outlinePassRef }) {
+const RaycasterHandler = ({ outlinePassRef, controlsRef }) => {
   const { camera, scene } = useThree();
   const raycaster = useRef(new THREE.Raycaster());
   const mouse = useRef(new THREE.Vector2());
   const selectedObjects = useRef([]);
+  const [activePrinter, setActivePrinter] = useState(false);
 
   useEffect(() => {
     const handlePointerMove = (event) => {
-      if (!outlinePassRef.current) return;
-
+      if (!outlinePassRef.current || activePrinter) return; // Prevent selection when zoomed in
+  
       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
+  
       raycaster.current.setFromCamera(mouse.current, camera);
       const intersects = raycaster.current.intersectObjects(scene.children, true);
-
+  
       const interactable = intersects.map((hit) => findInteractableObject(hit.object)).find(Boolean);
-
+  
       if (interactable) {
         selectedObjects.current = [interactable];
         outlinePassRef.current.selectedObjects = selectedObjects.current;
@@ -65,12 +68,66 @@ function RaycasterHandler({ outlinePassRef }) {
         outlinePassRef.current.selectedObjects = [];
       }
     };
-
+  
+    const handleClick = (event) => {
+      if (activePrinter) return; // Prevent interaction when zoomed in
+  
+      mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  
+      raycaster.current.setFromCamera(mouse.current, camera);
+      const intersects = raycaster.current.intersectObjects(scene.children, true);
+      
+      const interactable = intersects.map((hit) => findInteractableObject(hit.object)).find(Boolean);
+      
+      if (interactable && interactable.name === "printer") {
+        console.log("Before printer click - Camera Rotation:", {
+          x: (camera.rotation.x * 180 / Math.PI).toFixed(2) + "°",
+          y: (camera.rotation.y * 180 / Math.PI).toFixed(2) + "°",
+          z: (camera.rotation.z * 180 / Math.PI).toFixed(2) + "°"
+        });
+  
+        setActivePrinter(true);
+        
+        setTimeout(() => {
+          console.log("After printer click - Camera Rotation:", {
+            x: (camera.rotation.x * 180 / Math.PI).toFixed(2) + "°",
+            y: (camera.rotation.y * 180 / Math.PI).toFixed(2) + "°",
+            z: (camera.rotation.z * 180 / Math.PI).toFixed(2) + "°"
+          });
+        }, 100);
+      }
+    };
+  
     window.addEventListener("pointermove", handlePointerMove);
-    return () => window.removeEventListener("pointermove", handlePointerMove);
-  }, [camera, scene, outlinePassRef]);
+    window.addEventListener("click", handleClick);
+    
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("click", handleClick);
+    };
+  }, [camera, scene, outlinePassRef, activePrinter]); // Depend on `activePrinter`
+  
 
-  return null;
-}
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        setActivePrinter(false);
+      }
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, []);
+
+  return (
+    <>
+      <PrinterView 
+        isActive={activePrinter} 
+        onClose={() => setActivePrinter(false)}
+        controlsRef={controlsRef}
+      />
+    </>
+  );
+};
 
 export default RaycasterHandler;

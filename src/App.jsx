@@ -14,6 +14,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isFadingIn, setIsFadingIn] = useState(false);
   const outlinePassRef = useRef(null);
+  const controlsRef = useRef();
 
   const handleLoaded = () => {
     setIsFadingIn(true);
@@ -40,10 +41,11 @@ function App() {
             <ambientLight intensity={0.75} color={"#ffffff"} />
             <directionalLight position={[5, 10, 5]} intensity={2} />
 
-            <RaycasterHandler outlinePassRef={outlinePassRef} />
+            <RaycasterHandler outlinePassRef={outlinePassRef} controlsRef={controlsRef} />
             <PostProcessing outlinePassRef={outlinePassRef} />
 
             <OrbitControls
+              ref={controlsRef}
               minPolarAngle={0}
               maxPolarAngle={1.3}
               minAzimuthAngle={0}
