@@ -19,7 +19,26 @@ const RoomModel = () => {
 
   useEffect(() => {
     gltf.scene.traverse((child) => {
+      console.log("Object name:", child.name, "Parent name:", child.parent?.name);
+      
       if (child.material) {
+        // Check if this object or any of its parents is named "pug" or "helmet"
+        let currentObj = child;
+        let skipMaterial = false;
+        while (currentObj) {
+          if (currentObj.name === "pug" || currentObj.name === "helmet") {
+            console.log("Found special object in hierarchy:", currentObj.name);
+            skipMaterial = true;
+            break;
+          }
+          currentObj = currentObj.parent;
+        }
+
+        if (skipMaterial) {
+          console.log("Skipping material modification for:", child.name);
+          return;
+        }
+
         child.material = child.material.clone();
         child.material.transparent = true;
         child.material.opacity = 0;

@@ -55,7 +55,7 @@ const SocialIcons = () => {
     <group>
       <SocialIcon
         position={[-18, 10, -28]}
-        texture="/images/github-icon.png"
+        texture="/images/github-icon2.png"
         url="https://github.com/JacobMartinage"
         color="#24292e"
         name="github_icon"
