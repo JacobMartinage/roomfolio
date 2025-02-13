@@ -8,6 +8,7 @@ import "./index.css";
 import PostProcessing from "./components/PostProcessing";
 import RaycasterHandler from "./components/RaycasterHandler";
 import LoadingScreen from "./components/LoadingScreen";
+import SocialIcons from './components/SocialIcons';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,6 +35,7 @@ function App() {
             <RoomModel />
             <Stars />
             <Planets />
+            <SocialIcons />
             
             <ambientLight intensity={0.75} color={"#ffffff"} />
             <directionalLight position={[5, 10, 5]} intensity={2} />
