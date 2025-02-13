@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import PrinterView from "./PrinterView";
+import MailboxView from "./MailboxView";
 
 
 const SCREEN_TO_PARENT_MAP = {
@@ -47,10 +48,11 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef }) => {
   const mouse = useRef(new THREE.Vector2());
   const selectedObjects = useRef([]);
   const [activePrinter, setActivePrinter] = useState(false);
+  const [activeMailbox, setActiveMailbox] = useState(false);
 
   useEffect(() => {
     const handlePointerMove = (event) => {
-      if (!outlinePassRef.current || activePrinter) return; // Prevent selection when zoomed in
+      if (!outlinePassRef.current || activePrinter || activeMailbox) return;
   
       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -70,7 +72,7 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef }) => {
     };
   
     const handleClick = (event) => {
-      if (activePrinter) return; // Prevent interaction when zoomed in
+      if (activePrinter || activeMailbox) return;
   
       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -80,22 +82,14 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef }) => {
       
       const interactable = intersects.map((hit) => findInteractableObject(hit.object)).find(Boolean);
       
-      if (interactable && interactable.name === "printer") {
-        console.log("Before printer click - Camera Rotation:", {
-          x: (camera.rotation.x * 180 / Math.PI).toFixed(2) + "°",
-          y: (camera.rotation.y * 180 / Math.PI).toFixed(2) + "°",
-          z: (camera.rotation.z * 180 / Math.PI).toFixed(2) + "°"
-        });
-  
-        setActivePrinter(true);
-        
-        setTimeout(() => {
-          console.log("After printer click - Camera Rotation:", {
-            x: (camera.rotation.x * 180 / Math.PI).toFixed(2) + "°",
-            y: (camera.rotation.y * 180 / Math.PI).toFixed(2) + "°",
-            z: (camera.rotation.z * 180 / Math.PI).toFixed(2) + "°"
-          });
-        }, 100);
+      if (interactable) {
+        if (interactable.name === "Mailbox") {
+          console.log('Mailbox position:', interactable.position);
+          console.log('Mailbox world position:', interactable.getWorldPosition(new THREE.Vector3()));
+          setActiveMailbox(true);
+        } else if (interactable.name === "printer") {
+          setActivePrinter(true);
+        }
       }
     };
   
@@ -106,13 +100,14 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef }) => {
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("click", handleClick);
     };
-  }, [camera, scene, outlinePassRef, activePrinter]); // Depend on `activePrinter`
+  }, [camera, scene, outlinePassRef, activePrinter, activeMailbox]);
   
 
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
         setActivePrinter(false);
+        setActiveMailbox(false);
       }
     };
     window.addEventListener('keydown', handleEscape);
@@ -124,6 +119,11 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef }) => {
       <PrinterView 
         isActive={activePrinter} 
         onClose={() => setActivePrinter(false)}
+        controlsRef={controlsRef}
+      />
+      <MailboxView 
+        isActive={activeMailbox} 
+        onClose={() => setActiveMailbox(false)}
         controlsRef={controlsRef}
       />
     </>
