@@ -1,37 +1,31 @@
 import { useEffect, useState } from "react";
+import { useProgress } from "@react-three/drei";
 import "./LoadingScreen.css";
 
 const LoadingScreen = ({ onLoaded }) => {
-  const [progress, setProgress] = useState(0);
   const [fadeOut, setFadeOut] = useState(false);
   const [bricks, setBricks] = useState([]);
-  const [loadingComplete, setLoadingComplete] = useState(false);
+  const { progress, loaded, total, active } = useProgress(); // Added more progress details
+  const loadingComplete = loaded && progress >= 100;
 
   useEffect(() => {
-    const fakeLoading = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(fakeLoading);
-          setLoadingComplete(true); // ✅ Show Enter button immediately
-          return 100;
-        }
+    // Log loading status for debugging
+    console.log({
+      progress,
+      loaded,
+      total,
+      active,
+      loadingComplete
+    });
 
-        // ✅ Update brick-based progress animation
-        setBricks((b) => {
-          const newBricks = [...b, "█"];
-          return newBricks.length > 20 ? newBricks.slice(1) : newBricks;
-        });
-
-        return prev + Math.random() * 3; // ✅ Slower, more natural fill speed
-      });
-    }, 20); // ✅ Faster interval
-
-    return () => clearInterval(fakeLoading);
-  }, []);
+    // Update bricks based on real loading progress
+    const brickCount = Math.floor((progress / 100) * 20);
+    setBricks(Array(brickCount).fill("█"));
+  }, [progress, loaded, total, active]);
 
   const handleEnter = () => {
     setFadeOut(true);
-    setTimeout(() => onLoaded(), 800); // ✅ Slightly faster transition
+    setTimeout(() => onLoaded(), 500);
   };
 
   return (
@@ -43,7 +37,7 @@ const LoadingScreen = ({ onLoaded }) => {
 
         {!loadingComplete ? (
           <>
-            <h2>Loading...</h2>
+            <h2>Loading... {Math.round(progress)}%</h2>
             <div className="brick-loading-bar">
               {bricks.map((brick, index) => (
                 <span key={index} className="brick">{brick}</span>
