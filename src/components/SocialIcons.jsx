@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import { Float, Decal, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
-const SocialIcon = ({ position, texture, url, color }) => {
+const SocialIcon = ({ position, texture, url, color, name }) => {
   const meshRef = useRef();
   const [decal] = useTexture([texture], (loaded) => {
     console.log('Texture loaded:', loaded);
@@ -27,6 +27,7 @@ const SocialIcon = ({ position, texture, url, color }) => {
         receiveShadow
         scale={2}
         rotation={[0.3, -0.2, -0.2]}
+        name={name}
       >
         <icosahedronGeometry args={[1, 1]} />
         <meshStandardMaterial
@@ -53,16 +54,18 @@ const SocialIcons = () => {
   return (
     <group>
       <SocialIcon
-        position={[-10, 10, -28]}
-        texture="/images/github-icon2.png"
-        url="https://github.com/JacobMartinage"
+        position={[-18, 10, -28]}
+        texture="/images/github-icon.png"
+        url="https://github.com/yourusername"
         color="#24292e"
+        name="github_icon"
       />
       <SocialIcon
-        position={[-30, 14, -30]}
+        position={[-26, 14, -30]}
         texture="/images/linkedin-icon.png"
-        url="https://linkedin.com/in/jacob-martinage"
+        url="https://linkedin.com/in/yourusername"
         color="#0a66c2"
+        name="linkedin_icon"
       />
     </group>
   );

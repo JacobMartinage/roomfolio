@@ -17,7 +17,9 @@ const INTERACTABLES = [
   "arcade_machine",
   "printer",
   "Mailbox",
-  "coffee_table"
+  "coffee_table",
+  "github_icon",
+  "linkedin_icon"
 ];
 
 function findInteractableObject(object) {
