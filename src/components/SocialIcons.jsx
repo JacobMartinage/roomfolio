@@ -56,14 +56,14 @@ const SocialIcons = () => {
       <SocialIcon
         position={[-18, 10, -28]}
         texture="/images/github-icon.png"
-        url="https://github.com/yourusername"
+        url="https://github.com/JacobMartinage"
         color="#24292e"
         name="github_icon"
       />
       <SocialIcon
         position={[-26, 14, -30]}
         texture="/images/linkedin-icon.png"
-        url="https://linkedin.com/in/yourusername"
+        url="https://linkedin.com/in/jacob-martinage"
         color="#0a66c2"
         name="linkedin_icon"
       />
