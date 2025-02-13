@@ -1,0 +1,119 @@
+import { useThree } from "@react-three/fiber";
+import { useSpring } from "@react-spring/three";
+import { Html } from "@react-three/drei";
+import { useEffect, useState } from "react";
+import * as THREE from "three";
+
+const VTFlagView = ({ isActive, onClose, controlsRef }) => {
+  const { camera } = useThree();
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // Store the initial camera position & rotation
+  const [initialCamera] = useState({
+    position: new THREE.Vector3(20, 10, 20),
+    quaternion: new THREE.Quaternion().setFromEuler(
+      new THREE.Euler(
+        -69.35 * Math.PI / 180,
+        6.5 * Math.PI / 180,
+        11.5 * Math.PI / 180
+      )
+    ),
+  });
+
+  // Target position for viewing education details
+  const targetPosition = isActive ? new THREE.Vector3(-4, 10, -4) : initialCamera.position;
+  const targetQuaternion = isActive
+    ? new THREE.Quaternion().setFromEuler(new THREE.Euler(0, Math.PI / 2, 0))
+    : initialCamera.quaternion;
+
+  // Camera transition animation
+  const { pos, rot } = useSpring({
+    pos: targetPosition.toArray(),
+    rot: [targetQuaternion.x, targetQuaternion.y, targetQuaternion.z, targetQuaternion.w],
+    config: { mass: 1, tension: 180, friction: 40, clamp: true },
+    onStart: () => setIsAnimating(true),
+    onChange: ({ value }) => {
+      camera.position.set(...value.pos);
+      const newQuat = new THREE.Quaternion(value.rot[0], value.rot[1], value.rot[2], value.rot[3]);
+      camera.quaternion.slerp(newQuat, 0.1);
+      camera.updateProjectionMatrix();
+    },
+    onRest: () => {
+      setIsAnimating(false);
+      if (!isActive && controlsRef.current) {
+        controlsRef.current.enabled = true;
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (controlsRef.current) {
+      controlsRef.current.enabled = !isActive;
+    }
+  }, [isActive, controlsRef]);
+
+  const closeAndReset = () => {
+    setTimeout(onClose, 300);
+  };
+
+  return isActive || isAnimating ? (
+    <group>
+      <Html position={[-10, 10.5, -6.5]} center>
+        <div
+          style={{
+            background: "#731A19", // VT Maroon
+            color: "#FFC72C", // VT Orange
+            padding: "20px",
+            borderRadius: "10px",
+            width: "500px",
+            position: "relative",
+            boxShadow: "0 0 15px rgba(0, 0, 0, 0.3)",
+            border: "2px solid #000",
+            fontFamily: "'Courier New', Courier, monospace",
+            textAlign: "center",
+          }}
+        >
+          {/* Close Button */}
+          <button
+            onClick={closeAndReset}
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "10px",
+              background: "none",
+              border: "none",
+              fontSize: "24px",
+              cursor: "pointer",
+              fontWeight: "bold",
+              color: "white",
+            }}
+          >
+            ✕
+          </button>
+
+          <h2 style={{ fontSize: "28px", fontWeight: "bold" }}>🎓 Virginia Tech</h2>
+          <p style={{ fontSize: "18px", marginTop: "10px" }}>📅 Expected Graduation: <b>May 2026</b></p>
+          <p style={{ fontSize: "18px", marginTop: "5px" }}>📊 GPA: <b>3.7</b></p>
+
+          <h3 style={{ marginTop: "15px", fontSize: "24px", fontWeight: "bold" }}>Relevant Courses:</h3>
+          <ul style={{ listStyle: "none", padding: 0, fontSize: "16px" }}>
+            <li>🖥️ Data Structures & Algorithms</li>
+            <li>🥽 Extended Reality(AR/VR)</li>
+            <li>📈 Computer Organization</li>
+            <li>🔍 Problem Solving in CS</li>
+            <li>🛠️ Software Engineering</li>
+            <li>💻 Computer Systems</li>
+
+          </ul>
+
+          <h3 style={{ marginTop: "15px", fontSize: "24px", fontWeight: "bold" }}>Organizations:</h3>
+          <p style={{ fontSize: "16px" }}>🔬 <b>PRIME Lab</b> (HCI Research for AI in Education)</p>
+          <p style={{ fontSize: "16px" }}>🏍️ <b>BOLT @ VT</b> (Electric Motorcycle Design Team)</p>
+          
+        </div>
+      </Html>
+    </group>
+  ) : null;
+};
+
+export default VTFlagView;
