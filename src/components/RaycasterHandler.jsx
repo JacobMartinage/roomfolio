@@ -2,23 +2,37 @@ import { useEffect, useRef } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
+const SCREEN_TO_PARENT_MAP = {
+  'retro_tv_screen': 'retro_tv',
+  'monitor_1_screen': 'monitor_1',
+  'monitor_2_screen': 'monitor_2',
+  'arcade_screen': 'arcade_machine'
+};
+
 const INTERACTABLES = [
   "vt_flag",
   "retro_tv",
   "monitor_1",
   "monitor_2",
   "arcade_machine",
-  "arcade_screen",
   "printer",
   "Mailbox",
   "coffee_table"
 ];
 
-// ✅ Traverse parent objects to find interactables
 function findInteractableObject(object) {
   while (object) {
-    if (INTERACTABLES.includes(object.name)) return object; // ✅ Found interactable object
-    object = object.parent; // Move up to the parent
+    if (object.name in SCREEN_TO_PARENT_MAP) {
+      let parent = object;
+      while (parent) {
+        if (parent.name === SCREEN_TO_PARENT_MAP[object.name]) {
+          return parent;
+        }
+        parent = parent.parent;
+      }
+    }
+    if (INTERACTABLES.includes(object.name)) return object;
+    object = object.parent;
   }
   return null;
 }
@@ -39,7 +53,6 @@ function RaycasterHandler({ outlinePassRef }) {
       raycaster.current.setFromCamera(mouse.current, camera);
       const intersects = raycaster.current.intersectObjects(scene.children, true);
 
-      // ✅ Check parents for interactable objects
       const interactable = intersects.map((hit) => findInteractableObject(hit.object)).find(Boolean);
 
       if (interactable) {
