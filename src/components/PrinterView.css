@@ -31,3 +31,69 @@
   .download-btn:hover {
     background: #0056b3;
   }
+
+.printer-view-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.close-button {
+  position: fixed;
+  top: 40%;
+  right: 20%;
+  transform: translateY(-50%);
+  background: #940a0a;
+  border: none;
+  color: #fff;
+  font-size: 9vh;
+  width: 10vh;
+  height: 10vh;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+  pointer-events: auto;
+  z-index: 1001;
+}
+
+.close-button:hover {
+  background-color: rgba(247, 13, 13, 0.8);
+}
+
+.download-button {
+  position: fixed;
+  top: 40%;
+  left: 12%;
+  width: 13vh;
+  height: 13vh;
+  transform: translateY(-50%);
+  background: #202cd8;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 2vh;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  pointer-events: auto;
+  z-index: 1001;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.download-button:hover {
+  background: #2d3bf7;
+  transform: translateY(-50%) translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.download-button:active {
+  transform: translateY(-50%) translateY(0);
+}

@@ -10,10 +10,12 @@ import RaycasterHandler from "./components/RaycasterHandler";
 import LoadingScreen from "./components/LoadingScreen";
 import SocialIcons from './components/SocialIcons';
 import InstructionOverlay from './components/InstructionOverlay';
+import { PrinterViewOverlay } from './components/PrinterView';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isFadingIn, setIsFadingIn] = useState(false);
+  const [isPrinterActive, setIsPrinterActive] = useState(false);
   const outlinePassRef = useRef(null);
   const controlsRef = useRef();
 
@@ -41,6 +43,13 @@ function App() {
         interactedObjects={interactedObjects} 
         isLoading={isLoading}
       />
+      <PrinterViewOverlay 
+        isActive={isPrinterActive}
+        onClose={() => {
+          console.log("Closing printer view"); // Debug log
+          setIsPrinterActive(false);
+        }}
+      />
       <Canvas 
         className={`main-scene ${isFadingIn ? 'fade-in' : ''}`}
         camera={{ position: [20, 10, 20], fov: 55 }} 
@@ -56,7 +65,13 @@ function App() {
             <ambientLight intensity={0.75} color={"#ffffff"} />
             <directionalLight position={[5, 10, 5]} intensity={2} />
 
-            <RaycasterHandler outlinePassRef={outlinePassRef} controlsRef={controlsRef} interactedObjects={setInteractedObjects}/>
+            <RaycasterHandler 
+              outlinePassRef={outlinePassRef} 
+              controlsRef={controlsRef} 
+              interactedObjects={setInteractedObjects}
+              setPrinterActive={setIsPrinterActive}
+              isPrinterActive={isPrinterActive}
+            />
             <PostProcessing outlinePassRef={outlinePassRef} />
 
             <OrbitControls

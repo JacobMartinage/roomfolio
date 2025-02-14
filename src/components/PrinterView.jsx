@@ -1,10 +1,10 @@
 import { useThree } from "@react-three/fiber";
-import { useSpring, animated } from "@react-spring/three";
-import { Html } from "@react-three/drei";
+import { useSpring } from "@react-spring/three";
 import { useEffect, useState } from "react";
 import * as THREE from "three";
+import "./PrinterView.css";
 
-const PrinterView = ({ isActive, onClose, controlsRef }) => {
+const PrinterView = ({ isActive, controlsRef, onClose }) => {
   const { camera } = useThree();
 
   // Store the initial position & quaternion (for smooth rotation)
@@ -19,11 +19,11 @@ const PrinterView = ({ isActive, onClose, controlsRef }) => {
     ),
   });
 
-  const targetPosition = isActive ? new THREE.Vector3(2.35, 4.5, -4.15) : initialCamera.position;
+  const targetPosition = isActive ? new THREE.Vector3(2.1, 4.5, -4.2) : initialCamera.position;
   const targetQuaternion = isActive
     ? new THREE.Quaternion().setFromEuler(
         new THREE.Euler(
-          -69.35 * Math.PI / 180,
+          -71.35 * Math.PI / 180,
           6.5 * Math.PI / 180,
           11.5 * Math.PI / 180
         )
@@ -36,12 +36,9 @@ const PrinterView = ({ isActive, onClose, controlsRef }) => {
     rot: [targetQuaternion.x, targetQuaternion.y, targetQuaternion.z, targetQuaternion.w],
     config: { mass: 1, tension: 180, friction: 40, clamp: true },
     onChange: ({ value }) => {
-      // Apply position
       camera.position.set(...value.pos);
-
-      // Apply quaternion for smooth rotation
       const newQuat = new THREE.Quaternion(value.rot[0], value.rot[1], value.rot[2], value.rot[3]);
-      camera.quaternion.slerp(newQuat, 0.1); // Smoothly interpolate
+      camera.quaternion.slerp(newQuat, 0.1);
       camera.updateProjectionMatrix();
     },
     onRest: () => {
@@ -57,69 +54,35 @@ const PrinterView = ({ isActive, onClose, controlsRef }) => {
     }
   }, [isActive, controlsRef]);
 
-  return isActive ? (
-    <group>
-      {/* Close Button */}
-      <Html position={[2.6, 3.5, -5.2]} center>
-        <button 
-          onClick={onClose}
-          style={{
-            background: '#915eff',
-            border: 'none',
-            color: '#fff',
-            fontSize: '54px',
-            cursor: 'pointer',
-            width: '60px',
-            height: '60px',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'background-color 0.3s'
-          }}
-          onMouseEnter={e => e.target.style.backgroundColor = 'rgba(206, 14, 14, 0.6)'}
-          onMouseLeave={e => e.target.style.backgroundColor = '#915eff'}
-        >
-          ×
-        </button>
-      </Html>
+  return null;
+};
 
-      {/* Download Button */}
-      <Html position={[1.5, 3.5, -5]} center>
-        <div style={{
-          background: 'rgba(0, 0, 0, 0.8)',
-          padding: '15px',
-          borderRadius: '10px',
-          boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
-        }}>
-          <button 
-            onClick={() => window.open('/resume.pdf', '_blank')}
-            style={{
-              background: '#915eff',
-              color: 'white',
-              border: 'none',
-              padding: '10px 20px',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: 'bold',
-              transition: 'transform 0.2s, background-color 0.2s'
-            }}
-            onMouseEnter={e => {
-              e.target.style.transform = 'scale(1.05)';
-              e.target.style.backgroundColor = '#7f45ff';
-            }}
-            onMouseLeave={e => {
-              e.target.style.transform = 'scale(1)';
-              e.target.style.backgroundColor = '#915eff';
-            }}
-          >
-            Download PDF
-          </button>
-        </div>
-      </Html>
-    </group>
-  ) : null;
+export const PrinterViewOverlay = ({ isActive, onClose }) => {
+  if (!isActive) return null;
+  
+  const handleClose = () => {
+    console.log("Close button clicked"); // Debug log
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  return (
+    <div className="printer-view-overlay">
+      <button 
+        className="close-button"
+        onClick={handleClose}
+      >
+        ×
+      </button>
+      <button 
+        className="download-button"
+        onClick={() => window.open('/resume.pdf', '_blank')}
+      >
+        Download PDF
+      </button>
+    </div>
+  );
 };
 
 export default PrinterView;

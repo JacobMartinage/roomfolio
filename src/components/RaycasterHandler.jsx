@@ -42,19 +42,18 @@ function findInteractableObject(object) {
   return null;
 }
 
-const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects }) => {
+const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setPrinterActive, isPrinterActive }) => {
   const { camera, scene } = useThree();
   const raycaster = useRef(new THREE.Raycaster());
   const mouse = useRef(new THREE.Vector2());
   const selectedObjects = useRef([]);
 
-  const [activePrinter, setActivePrinter] = useState(false);
   const [activeMailbox, setActiveMailbox] = useState(false);
   const [activeFlag, setActiveFlag] = useState(false);
 
   useEffect(() => {
     const handlePointerMove = (event) => {
-      if (!outlinePassRef.current || activePrinter || activeMailbox || activeFlag) return;
+      if (!outlinePassRef.current || activeMailbox || activeFlag) return;
 
       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -74,7 +73,7 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects }) =>
     };
 
     const handleClick = (event) => {
-      if (activePrinter || activeMailbox || activeFlag) return;
+      if (activeMailbox || activeFlag) return;
 
       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -92,16 +91,12 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects }) =>
 
         switch (interactable.name) {
           case "Mailbox":
-            console.log("Mailbox position:", interactable.position);
-            console.log("Mailbox world position:", interactable.getWorldPosition(new THREE.Vector3()));
             setActiveMailbox(true);
             break;
           case "printer":
-            setActivePrinter(true);
+            setPrinterActive(true);
             break;
           case "vt_flag":
-            console.log("VT Flag position:", interactable.position);
-            console.log("VT Flag world position:", interactable.getWorldPosition(new THREE.Vector3()));
             setActiveFlag(true);
             break;
           default:
@@ -117,12 +112,11 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects }) =>
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("click", handleClick);
     };
-  }, [camera, scene, outlinePassRef, activePrinter, activeMailbox, activeFlag, interactedObjects]);
+  }, [camera, scene, outlinePassRef, activeMailbox, activeFlag, interactedObjects, setPrinterActive]);
 
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") {
-        setActivePrinter(false);
         setActiveMailbox(false);
         setActiveFlag(false);
       }
@@ -134,9 +128,10 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects }) =>
   return (
     <>
       <PrinterView
-        isActive={activePrinter}
-        onClose={() => setActivePrinter(false)}
+        isActive={isPrinterActive}
         controlsRef={controlsRef}
+        onClose={() => setPrinterActive(false)}
+        
       />
       <MailboxView
         isActive={activeMailbox}
