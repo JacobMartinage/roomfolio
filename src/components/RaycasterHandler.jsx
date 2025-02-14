@@ -20,9 +20,9 @@ const INTERACTABLES = [
   "arcade_machine",
   "printer",
   "Mailbox",
-  "coffee_table",
-  "github_icon",
-  "linkedin_icon",
+  // "coffee_table",
+  "github_orb",
+  "linkedin_orb",
 ];
 
 function findInteractableObject(object) {
@@ -42,7 +42,7 @@ function findInteractableObject(object) {
   return null;
 }
 
-const RaycasterHandler = ({ outlinePassRef, controlsRef }) => {
+const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects }) => {
   const { camera, scene } = useThree();
   const raycaster = useRef(new THREE.Raycaster());
   const mouse = useRef(new THREE.Vector2());
@@ -85,6 +85,11 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef }) => {
       const interactable = intersects.map((hit) => findInteractableObject(hit.object)).find(Boolean);
 
       if (interactable) {
+        interactedObjects((prev) => ({
+          ...prev,
+          [interactable.name.toLowerCase().replace("_", "-")]: true,
+        }));
+
         switch (interactable.name) {
           case "Mailbox":
             console.log("Mailbox position:", interactable.position);
@@ -112,7 +117,7 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef }) => {
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("click", handleClick);
     };
-  }, [camera, scene, outlinePassRef, activePrinter, activeMailbox, activeFlag]);
+  }, [camera, scene, outlinePassRef, activePrinter, activeMailbox, activeFlag, interactedObjects]);
 
   useEffect(() => {
     const handleEscape = (e) => {

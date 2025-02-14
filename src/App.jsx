@@ -9,12 +9,23 @@ import PostProcessing from "./components/PostProcessing";
 import RaycasterHandler from "./components/RaycasterHandler";
 import LoadingScreen from "./components/LoadingScreen";
 import SocialIcons from './components/SocialIcons';
+import InstructionOverlay from './components/InstructionOverlay';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isFadingIn, setIsFadingIn] = useState(false);
   const outlinePassRef = useRef(null);
   const controlsRef = useRef();
+
+  const [interactedObjects, setInteractedObjects] = useState({
+    "mailbox": false,
+    "retro-tv": false,
+    "vt-flag": false,
+    "printer": false,
+    "linkedin-orb": false,
+    "github-orb": false,
+    "arcade-machine": false,
+  });
 
   const handleLoaded = () => {
     setIsFadingIn(true);
@@ -26,6 +37,10 @@ function App() {
   return (
     <div className="canvas-container">
       {isLoading && <LoadingScreen onLoaded={handleLoaded} />}
+      <InstructionOverlay 
+        interactedObjects={interactedObjects} 
+        isLoading={isLoading}
+      />
       <Canvas 
         className={`main-scene ${isFadingIn ? 'fade-in' : ''}`}
         camera={{ position: [20, 10, 20], fov: 55 }} 
@@ -33,15 +48,15 @@ function App() {
       >
         <Suspense fallback={null}>
           <group visible={!isLoading}>
-            <RoomModel />
             <Stars />
+            <RoomModel />
             <Planets />
             <SocialIcons />
             
             <ambientLight intensity={0.75} color={"#ffffff"} />
             <directionalLight position={[5, 10, 5]} intensity={2} />
 
-            <RaycasterHandler outlinePassRef={outlinePassRef} controlsRef={controlsRef} />
+            <RaycasterHandler outlinePassRef={outlinePassRef} controlsRef={controlsRef} interactedObjects={setInteractedObjects}/>
             <PostProcessing outlinePassRef={outlinePassRef} />
 
             <OrbitControls

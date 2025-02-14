@@ -1,0 +1,117 @@
+.instruction-overlay {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(15, 23, 42, 0.95);
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: #fff;
+  text-align: left;
+  z-index: 1000;
+  width: 280px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.instruction-content h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.instruction-section {
+  margin-bottom: 1.5rem;
+}
+
+.instruction-section h4 {
+  color: #94a3b8;
+  margin: 0 0 0.8rem 0;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.instruction-section p {
+  margin: 0.5rem 0;
+  color: #e2e8f0;
+  font-size: 0.95rem;
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #94a3b8;
+  transition: color 0.3s ease;
+}
+
+.checklist-item.completed {
+  color: #fff;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #475569;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: #10b981;
+  transition: all 0.3s ease;
+}
+
+.completed .checkbox {
+  background-color: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.item-label {
+  flex: 1;
+}
+
+.dismiss-button {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.dismiss-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.dismiss-button:active {
+  transform: translateY(0);
+}
+  
