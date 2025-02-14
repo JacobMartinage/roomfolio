@@ -1,9 +1,9 @@
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Float, Decal, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
-const SocialIcon = ({ position, texture, url, color, name }) => {
+const SocialIcon = memo(({ position, texture, url, color, name }) => {
   const meshRef = useRef();
   const [decal] = useTexture([texture], (loaded) => {
     console.log('Texture loaded:', loaded);
@@ -18,7 +18,7 @@ const SocialIcon = ({ position, texture, url, color, name }) => {
   };
 
   return (
-    <Float speed={Math.random() + .35 } rotationIntensity={Math.random() + .3} floatIntensity={Math.random() + .2}>
+    <Float speed={1.35} rotationIntensity={1.3} floatIntensity={1.2}>
       <mesh
         ref={meshRef}
         position={position}
@@ -48,9 +48,9 @@ const SocialIcon = ({ position, texture, url, color, name }) => {
       </mesh>
     </Float>
   );
-};
+});
 
-const SocialIcons = () => {
+const SocialIcons = memo(() => {
   return (
     <group>
       <SocialIcon
@@ -58,17 +58,17 @@ const SocialIcons = () => {
         texture="/images/github-icon2.png"
         url="https://github.com/JacobMartinage"
         color="#24292e"
-        name="github_icon"
+        name="github_orb"
       />
       <SocialIcon
         position={[-26, 14, -30]}
         texture="/images/linkedin-icon.png"
         url="https://linkedin.com/in/jacob-martinage"
         color="#0a66c2"
-        name="linkedin_icon"
+        name="linkedin_orb"
       />
     </group>
   );
-};
+});
 
 export default SocialIcons;
