@@ -22,11 +22,14 @@ function App() {
   const [interactedObjects, setInteractedObjects] = useState({
     "mailbox": false,
     "retro-tv": false,
+    "computer": false,
     "vt-flag": false,
     "printer": false,
+    "arcade-machine": false,
     "linkedin-orb": false,
     "github-orb": false,
-    "arcade-machine": false,
+    
+    
   });
 
   const handleLoaded = () => {
@@ -35,6 +38,7 @@ function App() {
       setIsLoading(false);
     }, 400);
   };
+
 
   return (
     <div className="canvas-container">
@@ -57,7 +61,7 @@ function App() {
         <Suspense fallback={null}>
           <group visible={!isLoading}>
             <Stars />
-            <RoomModel />
+            <RoomModel/>
             <Planets />
             <SocialIcons />
             

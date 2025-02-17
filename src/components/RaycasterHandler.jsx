@@ -143,6 +143,7 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
         onClose={() => setActiveFlag(false)}
         controlsRef={controlsRef}
       />
+      
     </>
   );
 };
