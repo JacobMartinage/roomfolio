@@ -7,6 +7,7 @@ import * as THREE from "three";
 const VTFlagView = ({ isActive, onClose, controlsRef }) => {
   const { camera } = useThree();
   const [isAnimating, setIsAnimating] = useState(false);
+  const [shouldAnimate, setShouldAnimate] = useState(isActive);
 
   // Store the initial camera position & rotation
   const [initialCamera] = useState({
@@ -20,9 +21,15 @@ const VTFlagView = ({ isActive, onClose, controlsRef }) => {
     ),
   });
 
+  useEffect(() => {
+    if (isActive) {
+      setShouldAnimate(true);
+    }
+  }, [isActive]);
+
   // Target position for viewing education details
-  const targetPosition = isActive ? new THREE.Vector3(-4, 10, -4) : initialCamera.position;
-  const targetQuaternion = isActive
+  const targetPosition = shouldAnimate ? new THREE.Vector3(-4, 10, -4) : initialCamera.position;
+  const targetQuaternion = shouldAnimate
     ? new THREE.Quaternion().setFromEuler(new THREE.Euler(0, Math.PI / 2, 0))
     : initialCamera.quaternion;
 
@@ -40,7 +47,7 @@ const VTFlagView = ({ isActive, onClose, controlsRef }) => {
     },
     onRest: () => {
       setIsAnimating(false);
-      if (!isActive && controlsRef.current) {
+      if (!shouldAnimate && controlsRef.current) {
         controlsRef.current.enabled = true;
       }
     },
@@ -48,15 +55,20 @@ const VTFlagView = ({ isActive, onClose, controlsRef }) => {
 
   useEffect(() => {
     if (controlsRef.current) {
-      controlsRef.current.enabled = !isActive;
+      controlsRef.current.enabled = !shouldAnimate;
     }
-  }, [isActive, controlsRef]);
+  }, [shouldAnimate, controlsRef]);
 
   const closeAndReset = () => {
-    setTimeout(onClose, 300);
+    // First close the form
+    onClose();
+    // Then start camera movement
+    setTimeout(() => {
+      setShouldAnimate(false);
+    }, 50);
   };
 
-  return isActive || isAnimating ? (
+  return isActive ? (
     <group>
       <Html position={[-10, 10.5, -6.5]} center>
         <div
@@ -103,13 +115,11 @@ const VTFlagView = ({ isActive, onClose, controlsRef }) => {
             <li>🔍 Problem Solving in CS</li>
             <li>🛠️ Software Engineering</li>
             <li>💻 Computer Systems</li>
-
           </ul>
 
           <h3 style={{ marginTop: "15px", fontSize: "24px", fontWeight: "bold" }}>Organizations:</h3>
           <p style={{ fontSize: "16px" }}>🔬 <b>PRIME Lab</b> (HCI Research for AI in Education)</p>
           <p style={{ fontSize: "16px" }}>🏍️ <b>BOLT @ VT</b> (Electric Motorcycle Design Team)</p>
-          
         </div>
       </Html>
     </group>

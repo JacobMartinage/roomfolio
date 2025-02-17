@@ -46,7 +46,6 @@ function App() {
       <PrinterViewOverlay 
         isActive={isPrinterActive}
         onClose={() => {
-          console.log("Closing printer view"); // Debug log
           setIsPrinterActive(false);
         }}
       />

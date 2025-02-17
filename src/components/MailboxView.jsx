@@ -10,11 +10,18 @@ const MailboxView = ({ isActive, onClose, controlsRef }) => {
   const formRef = useRef();
   const [loading, setLoading] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [shouldAnimate, setShouldAnimate] = useState(isActive);
   const [form, setForm] = useState({
     name: "",
     email: "",
     message: "",
   });
+
+  useEffect(() => {
+    if (isActive) {
+      setShouldAnimate(true);
+    }
+  }, [isActive]);
 
   // Store the initial camera position & rotation
   const [initialCamera] = useState({
@@ -29,8 +36,8 @@ const MailboxView = ({ isActive, onClose, controlsRef }) => {
   });
 
   // Target position for mailbox view
-  const targetPosition = isActive ? new THREE.Vector3(7.5, 3, -1.8) : initialCamera.position;
-  const targetQuaternion = isActive
+  const targetPosition = shouldAnimate ? new THREE.Vector3(7.5, 3, -1.8) : initialCamera.position;
+  const targetQuaternion = shouldAnimate
     ? new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, 0))
     : initialCamera.quaternion;
 
@@ -48,7 +55,7 @@ const MailboxView = ({ isActive, onClose, controlsRef }) => {
     },
     onRest: () => {
       setIsAnimating(false);
-      if (!isActive && controlsRef.current) {
+      if (!shouldAnimate && controlsRef.current) {
         controlsRef.current.enabled = true;
       }
     },
@@ -56,16 +63,21 @@ const MailboxView = ({ isActive, onClose, controlsRef }) => {
 
   useEffect(() => {
     if (controlsRef.current) {
-      controlsRef.current.enabled = !isActive;
+      controlsRef.current.enabled = !shouldAnimate;
     }
-  }, [isActive, controlsRef]);
+  }, [shouldAnimate, controlsRef]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const closeAndReset = () => {
-    setTimeout(onClose, 300);
+    // First close the form
+    onClose();
+    // Then start camera movement
+    setTimeout(() => {
+      setShouldAnimate(false);
+    }, 50);
   };
 
   const handleSubmit = (e) => {
@@ -98,19 +110,19 @@ const MailboxView = ({ isActive, onClose, controlsRef }) => {
       });
   };
 
-  return isActive || isAnimating ? (
+  return isActive ? (
     <group>
       <Html position={[7.5, 3.25, -4.5]} center>
         <div
           style={{
-            background: "#fdf8e1", // Cream color
+            background: "#fdf8e1",
             padding: "20px",
             borderRadius: "10px",
             width: "700px",
             position: "relative",
             boxShadow: "0 0 15px rgba(0, 0, 0, 0.3)",
             border: "2px solid #000",
-            fontFamily: "'Courier New', Courier, monospace", // Old-school letter feel
+            fontFamily: "'Courier New', Courier, monospace",
           }}
         >
           {/* Stamp */}
