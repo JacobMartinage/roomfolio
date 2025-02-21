@@ -36,7 +36,7 @@ const MailboxView = ({ isActive, onClose, controlsRef }) => {
   });
 
   // Target position for mailbox view
-  const targetPosition = shouldAnimate ? new THREE.Vector3(7.5, 3, -1.8) : initialCamera.position;
+  const targetPosition = shouldAnimate ? new THREE.Vector3(7.5, 5, -0.8) : initialCamera.position;
   const targetQuaternion = shouldAnimate
     ? new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, 0))
     : initialCamera.quaternion;
@@ -112,16 +112,21 @@ const MailboxView = ({ isActive, onClose, controlsRef }) => {
 
   return isActive ? (
     <group>
-      <Html position={[7.5, 3.25, -4.5]} center>
+      <Html 
+      position={[6.98, 5.7, -2.3]} 
+      center
+      zIndexRange={[3,3]}
+      occlude = "blending"
+      >
         <div
           style={{
             background: "#fdf8e1",
-            padding: "20px",
             borderRadius: "10px",
-            width: "700px",
-            position: "relative",
-            boxShadow: "0 0 15px rgba(0, 0, 0, 0.3)",
-            border: "2px solid #000",
+            padding: "20px",
+            width: "600px",
+            height: "400px",
+            position: "absolute",
+
             fontFamily: "'Courier New', Courier, monospace",
           }}
         >

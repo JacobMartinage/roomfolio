@@ -69,7 +69,7 @@ function RoomModel() {
           <Html 
             transform 
             occlude="blending"
-            zIndexRange={[10,10]} 
+            zIndexRange={[3,3]} 
           >
             <iframe
               occlude="blending"
@@ -95,7 +95,7 @@ function RoomModel() {
           <Html 
             transform 
             occlude="blending"
-            zIndexRange={[2,2]} 
+            zIndexRange={[3,3]} 
           >
             <iframe
               occlude="blending"
@@ -121,7 +121,7 @@ function RoomModel() {
           <Html 
             transform 
             occlude="blending"
-            zIndexRange={[10,10]} 
+            zIndexRange={[3,3]} 
           >
             <iframe
               src="https://example.com/simple-arcade"
