@@ -43,15 +43,17 @@ function RoomModel() {
       monitor1: getWorldTransform("monitor_1_screen"),
       retroTv: getWorldTransform("retro_tv_screen"),
       arcade: getWorldTransform("arcade_screen"),
+
     });
   }, [gltf]);
+  
 
 
   return (
     <>
-     
-      <primitive object={gltf.scene} position={[4, 0, 4]} />
       <Preload all />
+      <primitive object={gltf.scene} position={[4, 0, 4]} />
+      
 
       {/* For each screen, place an Html element at that transform */}
       
@@ -64,21 +66,24 @@ function RoomModel() {
           // scale everything down (try 0.01, or see what fits)
           
         >
-          <Html transform occlude="blending">
+          <Html 
+            transform 
+            occlude="blending"
+            zIndexRange={[10,10]} 
+          >
             <iframe
               src="https://example.com/simple-arcade"
               width={1600}
               height={900}
               style={{ border: "none" }}
-              unselectable="true"
-              zIndex={-1000}
+              pointerEvents="none"
               name="Computer"
             />
           </Html>
         </group>
       )}
 
-      {/* The main GLTF object */}
+      The main GLTF object
       {screenTransforms.retroTv && (
         <group
           position={[-4.55,4.44,-2.85]}
@@ -87,13 +92,17 @@ function RoomModel() {
           // scale everything down (try 0.01, or see what fits)
           
         >
-          <Html transform occlude="blending">
+          <Html 
+            transform 
+            occlude="blending"
+            zIndexRange={[10,10]} 
+          >
             <iframe
               src="https://example.com/simple-arcade"
               width={1100}
               height={1000}
               style={{ border: "none" }}
-              unselectable="true"
+              pointerEvents="none"
               name="retroTv"
             />
           </Html>
@@ -109,14 +118,18 @@ function RoomModel() {
           // scale everything down (try 0.01, or see what fits)
           
         >
-          <Html transform occlude="blending">
+          <Html 
+            transform 
+            occlude="blending"
+            zIndexRange={[10,10]} 
+          >
             <iframe
               src="https://example.com/simple-arcade"
               width={1200}
               height={1200}
               style={{ border: "none" }}
-              unselectable="true"
-              zIndex={-1000}
+              pointerEvents="none"
+              
               name="arcade"
             />
           </Html>

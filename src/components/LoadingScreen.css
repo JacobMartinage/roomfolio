@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: center;
     transition: opacity 1s ease-in-out;
-    z-index: 1000;
+    z-index: 5;
 }
 
 /* Fade-out effect for loading transition */

@@ -41,55 +41,63 @@ function App() {
 
 
   return (
-    <div className="canvas-container">
-      {isLoading && <LoadingScreen onLoaded={handleLoaded} />}
+    <div style={{ position: 'relative' }}>
+
+    
+      <div className="canvas-container">
+        {isLoading && <LoadingScreen onLoaded={handleLoaded} />}
+        
+        <PrinterViewOverlay 
+          isActive={isPrinterActive}
+          onClose={() => {
+            setIsPrinterActive(false);
+          }}
+        />
+
+        <Canvas 
+          className={`main-scene ${isFadingIn ? 'fade-in' : ''}`}
+          camera={{ position: [20, 10, 20], fov: 55 }} 
+          style={{ background: "#050816" }}
+        >
+          <Suspense fallback={null}>
+            <group visible={!isLoading}>
+              <Stars />
+              <RoomModel/>
+              <Planets />
+              <SocialIcons />
+              
+              <ambientLight intensity={0.75} color={"#ffffff"} />
+              <directionalLight position={[5, 10, 5]} intensity={2} />
+
+              <RaycasterHandler 
+                outlinePassRef={outlinePassRef} 
+                controlsRef={controlsRef} 
+                interactedObjects={setInteractedObjects}
+                setPrinterActive={setIsPrinterActive}
+                isPrinterActive={isPrinterActive}
+              />
+              <PostProcessing outlinePassRef={outlinePassRef} />
+
+              <OrbitControls
+                ref={controlsRef}
+                minPolarAngle={0}
+                maxPolarAngle={1.3}
+                minAzimuthAngle={0}
+                maxAzimuthAngle={Math.PI / 2}
+                minDistance={10}
+                maxDistance={200}
+                enablePan={false}
+              />
+            </group>
+          </Suspense>
+        </Canvas>
+        
+      </div>
+
       <InstructionOverlay 
-        interactedObjects={interactedObjects} 
-        isLoading={isLoading}
-      />
-      <PrinterViewOverlay 
-        isActive={isPrinterActive}
-        onClose={() => {
-          setIsPrinterActive(false);
-        }}
-      />
-      <Canvas 
-        className={`main-scene ${isFadingIn ? 'fade-in' : ''}`}
-        camera={{ position: [20, 10, 20], fov: 55 }} 
-        style={{ background: "#050816" }}
-      >
-        <Suspense fallback={null}>
-          <group visible={!isLoading}>
-            <Stars />
-            <RoomModel/>
-            <Planets />
-            <SocialIcons />
-            
-            <ambientLight intensity={0.75} color={"#ffffff"} />
-            <directionalLight position={[5, 10, 5]} intensity={2} />
-
-            <RaycasterHandler 
-              outlinePassRef={outlinePassRef} 
-              controlsRef={controlsRef} 
-              interactedObjects={setInteractedObjects}
-              setPrinterActive={setIsPrinterActive}
-              isPrinterActive={isPrinterActive}
-            />
-            <PostProcessing outlinePassRef={outlinePassRef} />
-
-            <OrbitControls
-              ref={controlsRef}
-              minPolarAngle={0}
-              maxPolarAngle={1.3}
-              minAzimuthAngle={0}
-              maxAzimuthAngle={Math.PI / 2}
-              minDistance={10}
-              maxDistance={200}
-              enablePan={false}
-            />
-          </group>
-        </Suspense>
-      </Canvas>
+            interactedObjects={interactedObjects} 
+            isLoading={isLoading}
+          />
     </div>
   );
 }
