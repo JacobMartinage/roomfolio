@@ -23,11 +23,11 @@ const SocialIcon = memo(({ position, texture, url, color, name }) => {
         ref={meshRef}
         position={position}
         onClick={handleClick}
-        castShadow
-        receiveShadow
         scale={2}
         rotation={[0.3, -0.2, -0.2]}
         name={name}
+        zIndexRange={[1,1]}
+        occlude="blending"
       >
         <icosahedronGeometry args={[1, 1]} />
         <meshStandardMaterial
@@ -35,16 +35,19 @@ const SocialIcon = memo(({ position, texture, url, color, name }) => {
           metalness={0.3}
           roughness={0.2}
           polygonOffset
-          polygonOffsetFactor={-5}
+          polygonOffsetFactor={-1}
         />
 
         <Decal
           position={[1.1, 0.1, 1]}
-          rotation={[0,.8, 0]}
+          rotation={[0, 0.8, 0]}
           scale={2.1}
           map={decal}
-          transparent={true}
+          transparent
+          depthTest={true}
+          depthWrite={true}
         />
+
       </mesh>
     </Float>
   );
