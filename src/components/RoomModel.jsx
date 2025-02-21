@@ -52,7 +52,7 @@ function RoomModel() {
   return (
     <>
       <Preload all />
-      <primitive object={gltf.scene} position={[4, 0, 4]} />
+      <primitive object={gltf.scene} position={[4, 0, 4]} zIndexRange={[2,2]}/>
       
 
       {/* For each screen, place an Html element at that transform */}
@@ -72,11 +72,11 @@ function RoomModel() {
             zIndexRange={[10,10]} 
           >
             <iframe
+              occlude="blending"
               src="https://example.com/simple-arcade"
               width={1600}
               height={900}
               style={{ border: "none" }}
-              pointerEvents="none"
               name="Computer"
             />
           </Html>
@@ -95,14 +95,14 @@ function RoomModel() {
           <Html 
             transform 
             occlude="blending"
-            zIndexRange={[10,10]} 
+            zIndexRange={[2,2]} 
           >
             <iframe
+              occlude="blending"
               src="https://example.com/simple-arcade"
               width={1100}
               height={1000}
               style={{ border: "none" }}
-              pointerEvents="none"
               name="retroTv"
             />
           </Html>
@@ -127,9 +127,7 @@ function RoomModel() {
               src="https://example.com/simple-arcade"
               width={1200}
               height={1200}
-              style={{ border: "none" }}
-              pointerEvents="none"
-              
+              style={{ border: "none" }}              
               name="arcade"
             />
           </Html>
