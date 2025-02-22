@@ -28,7 +28,7 @@ const VTFlagView = ({ isActive, onClose, controlsRef }) => {
   }, [isActive]);
 
   // Target position for viewing education details
-  const targetPosition = shouldAnimate ? new THREE.Vector3(-4, 10, -4) : initialCamera.position;
+  const targetPosition = shouldAnimate ? new THREE.Vector3(-3, 10, -6) : initialCamera.position;
   const targetQuaternion = shouldAnimate
     ? new THREE.Quaternion().setFromEuler(new THREE.Euler(0, Math.PI / 2, 0))
     : initialCamera.quaternion;
@@ -70,7 +70,12 @@ const VTFlagView = ({ isActive, onClose, controlsRef }) => {
 
   return isActive ? (
     <group>
-      <Html position={[-10, 10.5, -6.5]} center>
+      <Html 
+        position={[-10, 12.5, -5]} 
+        center
+        occlude = "blending"
+        zIndexRange={[4,4]}
+      >
         <div
           style={{
             background: "#731A19", // VT Maroon
@@ -78,7 +83,7 @@ const VTFlagView = ({ isActive, onClose, controlsRef }) => {
             padding: "20px",
             borderRadius: "10px",
             width: "500px",
-            position: "relative",
+            position: "absolute",
             boxShadow: "0 0 15px rgba(0, 0, 0, 0.3)",
             border: "2px solid #000",
             fontFamily: "'Courier New', Courier, monospace",

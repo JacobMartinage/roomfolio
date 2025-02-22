@@ -1,0 +1,5 @@
+- Finish Computer web app OS (Jacob OS)
+- Add ability to use escape instead of clicking the x
+- Add arcade 2d page
+- make objects uninteractable when in one of the object views
+- 

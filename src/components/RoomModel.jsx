@@ -69,7 +69,7 @@ function RoomModel({ isComputerActive, isArcadeActive, isTVActive }) {
           <Html 
             transform 
             occlude="blending"
-            zIndexRange={[3,3]}
+            zIndexRange={[5,5]}
             unselectable={true}
             style={{ pointerEvents: isComputerActive ? 'auto' : 'none' }}
           >
@@ -97,7 +97,7 @@ function RoomModel({ isComputerActive, isArcadeActive, isTVActive }) {
           <Html 
             transform 
             occlude="blending"
-            zIndexRange={[3,3]} 
+            zIndexRange={[5,5]} 
             unselectable={true}
             style={{ pointerEvents: isTVActive ? 'auto' : 'none' }}
           >
@@ -125,7 +125,7 @@ function RoomModel({ isComputerActive, isArcadeActive, isTVActive }) {
           <Html 
             transform 
             occlude="blending"
-            zIndexRange={[3,3]} 
+            zIndexRange={[5,5]} 
             unselectable={true}
             style={{ pointerEvents: isArcadeActive ? 'auto' : 'none' }}
           >

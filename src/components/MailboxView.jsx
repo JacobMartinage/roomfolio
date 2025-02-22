@@ -115,8 +115,9 @@ const MailboxView = ({ isActive, onClose, controlsRef }) => {
       <Html 
       position={[6.98, 5.7, -2.3]} 
       center
-      zIndexRange={[3,3]}
+      zIndexRange={[4,4]}
       occlude = "blending"
+      
       >
         <div
           style={{
@@ -125,8 +126,7 @@ const MailboxView = ({ isActive, onClose, controlsRef }) => {
             padding: "20px",
             width: "600px",
             height: "400px",
-            position: "absolute",
-
+            position: "fixed",
             fontFamily: "'Courier New', Courier, monospace",
           }}
         >
