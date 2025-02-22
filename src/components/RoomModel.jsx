@@ -5,11 +5,11 @@ import * as THREE from "three";
 import { useEffect, useState } from "react";
 
 function RoomModel() {
-  const gltf = useLoader(GLTFLoader, "/models/spaceRoom.glb");
+  const gltf = useLoader(GLTFLoader, "/models/SpaceRoom4.glb");
 
   // We'll store each screen's transform in state after the GLTF loads
   const [screenTransforms, setScreenTransforms] = useState({
-    monitor1: null,
+    computer: null,
     retroTv: null,
     arcade: null
   });
@@ -40,7 +40,7 @@ function RoomModel() {
 
     // Capture each screen once
     setScreenTransforms({
-      monitor1: getWorldTransform("monitor_1_screen"),
+      computer: getWorldTransform("monitor_1_screen"),
       retroTv: getWorldTransform("retro_tv_screen"),
       arcade: getWorldTransform("arcade_screen"),
 
@@ -58,7 +58,7 @@ function RoomModel() {
       {/* For each screen, place an Html element at that transform */}
       
        {/* The main GLTF object */}
-       {screenTransforms.monitor1 && (
+       {screenTransforms.computer && (
         <group
           position={[-1.93,4.6,-4.95]}
           rotation={[0,Math.PI/14,0]}
@@ -69,7 +69,9 @@ function RoomModel() {
           <Html 
             transform 
             occlude="blending"
-            zIndexRange={[3,3]} 
+            zIndexRange={[3,3]}
+            unselectable={true}
+            style={{ pointerEvents: 'none' }}
           >
             <iframe
               occlude="blending"
@@ -96,10 +98,12 @@ function RoomModel() {
             transform 
             occlude="blending"
             zIndexRange={[3,3]} 
+            unselectable={true}
+            style={{ pointerEvents: 'none' }}
           >
             <iframe
               occlude="blending"
-              src="https://example.com/simple-arcade"
+              src="https://jacobmartinage.github.io/2d-site/"
               width={1100}
               height={1000}
               style={{ border: "none" }}
@@ -122,13 +126,15 @@ function RoomModel() {
             transform 
             occlude="blending"
             zIndexRange={[3,3]} 
+            unselectable={true}
+            style={{ pointerEvents: 'none' }}
           >
             <iframe
-              src="https://jacobmartinage.com"
+              src="https://example.com/simple-arcade"
               width={1200}
               height={1200}
               style={{ border: "none" }}              
-              name="arcade"
+              name="arcade_screen"
             />
           </Html>
         </group>

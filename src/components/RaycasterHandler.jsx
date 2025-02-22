@@ -7,20 +7,31 @@ import VTFlagView from "./VTFlagView";
 
 const SCREEN_TO_PARENT_MAP = {
   "retro_tv_screen": "retro_tv",
-  "monitor_1_screen": "monitor_1",
-  "monitor_2_screen": "monitor_2",
-  "arcade_screen": "arcade_machine",
+  "monitor_1_screen": "Computer",
+  "arcade_screen": "arcade",
 };
 
 const INTERACTABLES = [
   "vt_flag",
   "retro_tv",
-  "monitor_1",
-  "monitor_2",
+  "Computer",
   "arcade_machine",
   "printer",
   "Mailbox",
-  // "coffee_table",
+  "monitor_1_screen",
+  "retro_tv_screen",
+  "arcade_screen",
+  "github_orb",
+  "linkedin_orb",
+];
+
+const SHOWN_INTERACTABLES = [
+  "vt_flag",
+  "retro_tv",
+  "Computer",
+  "arcade_machine",
+  "printer",
+  "Mailbox",
   "github_orb",
   "linkedin_orb",
 ];
@@ -36,13 +47,13 @@ function findInteractableObject(object) {
         parent = parent.parent;
       }
     }
-    if (INTERACTABLES.includes(object.name)) return object;
+    if (SHOWN_INTERACTABLES.includes(object.name)) return object;
     object = object.parent;
   }
   return null;
 }
 
-const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setPrinterActive, isPrinterActive }) => {
+const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setPrinterActive, isPrinterActive, setTVActive, setComputerActive, setArcadeActive }) => {
   const { camera, scene } = useThree();
   const raycaster = useRef(new THREE.Raycaster());
   const mouse = useRef(new THREE.Vector2());
@@ -65,6 +76,11 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
 
       if (interactable) {
         selectedObjects.current = [interactable];
+
+        if (interactable.name == "arcade_screen") {
+          selectedObjects.current.push(interactable.parent);
+        }
+
         outlinePassRef.current.selectedObjects = selectedObjects.current;
       } else {
         selectedObjects.current = [];
@@ -73,6 +89,7 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
     };
 
     const handleClick = (event) => {
+      
       if (activeMailbox || activeFlag) return;
 
       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -80,9 +97,8 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
 
       raycaster.current.setFromCamera(mouse.current, camera);
       const intersects = raycaster.current.intersectObjects(scene.children, true);
-
       const interactable = intersects.map((hit) => findInteractableObject(hit.object)).find(Boolean);
-
+     
       if (interactable) {
         interactedObjects((prev) => ({
           ...prev,
@@ -99,8 +115,28 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
           case "vt_flag":
             setActiveFlag(true);
             break;
-          default:
+          case "retro_tv":
+            setTVActive(true);
             break;
+          case "retro_tv_screen":
+            setTVActive(true);
+            break;
+          case "monitor_1_screen":
+            setComputerActive(true);
+            console.log("computer active");
+            break;
+          case "arcade_screen":
+            setArcadeActive(true);
+            break;
+          case "Computer":
+            setComputerActive(true);
+            break;
+          case "arcade_machine":
+            setArcadeActive(true);
+            break;
+            
+          default:
+            console.log("interactable", interactable.name);
         }
       }
     };

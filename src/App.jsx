@@ -11,11 +11,20 @@ import LoadingScreen from "./components/LoadingScreen";
 import SocialIcons from './components/SocialIcons';
 import InstructionOverlay from './components/InstructionOverlay';
 import { PrinterViewOverlay } from './components/PrinterView';
+import TVView from './components/TVView';
+import TVViewOverlay from './components/TVViewOverlay';
+import ComputerViewOverlay from './components/ComputerViewOverlay';
+import ArcadeViewOverlay from './components/ArcadeViewOverlay';
+import ComputerView from './components/ComputerView';
+import ArcadeView from './components/ArcadeView';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isFadingIn, setIsFadingIn] = useState(false);
   const [isPrinterActive, setIsPrinterActive] = useState(false);
+  const [isTVActive, setIsTVActive] = useState(false);
+  const [isComputerActive, setComputerActive] = useState(false);
+  const [isArcadeActive, setArcadeActive] = useState(false);
   const outlinePassRef = useRef(null);
   const controlsRef = useRef();
 
@@ -25,7 +34,7 @@ function App() {
     "computer": false,
     "vt-flag": false,
     "printer": false,
-    "arcade-machine": false,
+    "arcade_machine": false,
     "linkedin-orb": false,
     "github-orb": false,
     
@@ -54,6 +63,13 @@ function App() {
           }}
         />
 
+        <TVViewOverlay 
+                  isActive={isTVActive}
+                  onClose={() => setIsTVActive(false)}
+        />
+         <ComputerViewOverlay isActive={isComputerActive} onClose={() => setComputerActive(false)} />
+         <ArcadeViewOverlay isActive={isArcadeActive} onClose={() => setArcadeActive(false)} />
+
         <Canvas 
           className={`main-scene ${isFadingIn ? 'fade-in' : ''}`}
           camera={{ position: [20, 10, 20], fov: 55 }} 
@@ -75,6 +91,9 @@ function App() {
                 interactedObjects={setInteractedObjects}
                 setPrinterActive={setIsPrinterActive}
                 isPrinterActive={isPrinterActive}
+                setTVActive={setIsTVActive}
+                setComputerActive={setComputerActive}
+                setArcadeActive={setArcadeActive}
               />
               <PostProcessing outlinePassRef={outlinePassRef} />
 
@@ -88,6 +107,10 @@ function App() {
                 maxDistance={200}
                 enablePan={false}
               />
+
+              <TVView isActive={isTVActive} controlsRef={controlsRef} />
+              <ComputerView isActive={isComputerActive} controlsRef={controlsRef} />
+              <ArcadeView isActive={isArcadeActive} controlsRef={controlsRef} />
             </group>
           </Suspense>
         </Canvas>

@@ -1,0 +1,30 @@
+.computer-view-overlay {
+    top: 10%;
+    left: 10%;
+    background: rgba(30, 144, 255, 0.85); /* Blueish background */
+    border-radius: 10px;
+    width: 3%;
+    height: 5%;
+    color: white;
+    font-size: 1rem;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+  }
+  
+  .computer-view-overlay .close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 4rem;
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+  }
+  
