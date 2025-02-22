@@ -78,7 +78,7 @@ function App() {
           <Suspense fallback={null}>
             <group visible={!isLoading}>
               <Stars />
-              <RoomModel/>
+              <RoomModel isComputerActive={isComputerActive} isArcadeActive={isArcadeActive} isTVActive={isTVActive}/>
               <Planets />
               <SocialIcons />
               
@@ -92,8 +92,11 @@ function App() {
                 setPrinterActive={setIsPrinterActive}
                 isPrinterActive={isPrinterActive}
                 setTVActive={setIsTVActive}
+                isTVActive={isTVActive}
                 setComputerActive={setComputerActive}
+                isComputerActive={isComputerActive}
                 setArcadeActive={setArcadeActive}
+                isArcadeActive={isArcadeActive}
               />
               <PostProcessing outlinePassRef={outlinePassRef} />
 

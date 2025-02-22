@@ -11,19 +11,6 @@ const SCREEN_TO_PARENT_MAP = {
   "arcade_screen": "arcade",
 };
 
-const INTERACTABLES = [
-  "vt_flag",
-  "retro_tv",
-  "Computer",
-  "arcade_machine",
-  "printer",
-  "Mailbox",
-  "monitor_1_screen",
-  "retro_tv_screen",
-  "arcade_screen",
-  "github_orb",
-  "linkedin_orb",
-];
 
 const SHOWN_INTERACTABLES = [
   "vt_flag",
@@ -53,7 +40,7 @@ function findInteractableObject(object) {
   return null;
 }
 
-const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setPrinterActive, isPrinterActive, setTVActive, setComputerActive, setArcadeActive }) => {
+const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setPrinterActive, isPrinterActive, setTVActive, isTVActive, setComputerActive, isComputerActive, setArcadeActive, isArcadeActive }) => {
   const { camera, scene } = useThree();
   const raycaster = useRef(new THREE.Raycaster());
   const mouse = useRef(new THREE.Vector2());
@@ -62,9 +49,16 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
   const [activeMailbox, setActiveMailbox] = useState(false);
   const [activeFlag, setActiveFlag] = useState(false);
 
+
   useEffect(() => {
     const handlePointerMove = (event) => {
-      if (!outlinePassRef.current || activeMailbox || activeFlag) return;
+      if (!outlinePassRef.current || activeMailbox || activeFlag || isComputerActive || isArcadeActive || isTVActive) {
+        console.log("not active");
+        console.log(isComputerActive, isArcadeActive, isTVActive);
+        selectedObjects.current = [];
+        return;
+      }
+
 
       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -75,6 +69,8 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
       const interactable = intersects.map((hit) => findInteractableObject(hit.object)).find(Boolean);
 
       if (interactable) {
+        console.log("view status's");
+        console.log(isComputerActive, isArcadeActive, isTVActive);
         selectedObjects.current = [interactable];
 
         if (interactable.name == "arcade_screen") {

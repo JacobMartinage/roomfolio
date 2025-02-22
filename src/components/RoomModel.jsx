@@ -4,7 +4,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 import { useEffect, useState } from "react";
 
-function RoomModel() {
+function RoomModel({ isComputerActive, isArcadeActive, isTVActive }) {
   const gltf = useLoader(GLTFLoader, "/models/SpaceRoom4.glb");
 
   // We'll store each screen's transform in state after the GLTF loads
@@ -71,7 +71,7 @@ function RoomModel() {
             occlude="blending"
             zIndexRange={[3,3]}
             unselectable={true}
-            style={{ pointerEvents: 'none' }}
+            style={{ pointerEvents: isComputerActive ? 'auto' : 'none' }}
           >
             <iframe
               occlude="blending"
@@ -99,7 +99,7 @@ function RoomModel() {
             occlude="blending"
             zIndexRange={[3,3]} 
             unselectable={true}
-            style={{ pointerEvents: 'none' }}
+            style={{ pointerEvents: isTVActive ? 'auto' : 'none' }}
           >
             <iframe
               occlude="blending"
@@ -127,7 +127,7 @@ function RoomModel() {
             occlude="blending"
             zIndexRange={[3,3]} 
             unselectable={true}
-            style={{ pointerEvents: 'none' }}
+            style={{ pointerEvents: isArcadeActive ? 'auto' : 'none' }}
           >
             <iframe
               src="https://example.com/simple-arcade"
