@@ -34,7 +34,7 @@ function App() {
     "computer": false,
     "vt-flag": false,
     "printer": false,
-    "Arcade Machine": false,
+    "arcade-machine": false,
     "linkedin-orb": false,
     "github-orb": false,
     

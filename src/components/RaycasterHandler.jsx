@@ -83,7 +83,7 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
         selectedObjects.current = [interactable];
 
         if (interactable.name == "arcade_screen") {
-          selectedObjects.current.push(findInteractableObject(interactable.parent));
+          selectedObjects.current.push(interactable.parent);
         }
 
         outlinePassRef.current.selectedObjects = selectedObjects.current;
