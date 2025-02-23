@@ -78,8 +78,6 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
       const interactable = intersects.map((hit) => findInteractableObject(hit.object)).find(Boolean);
 
       if (interactable) {
-        console.log("view status's");
-        console.log(isComputerActive, isArcadeActive, isTVActive);
         selectedObjects.current = [interactable];
 
         if (interactable.name == "arcade_screen") {

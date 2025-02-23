@@ -9,8 +9,8 @@ const Stars = memo((props) => {
   
   // Memoize the star positions so they don't change on re-render
   const sphere = useMemo(() => {
-    const tempArray = new Float32Array(3000 * 3);
-    const positions = random.inSphere(tempArray, { radius: 200.25 });
+    const tempArray = new Float32Array(2000 * 3);
+    const positions = random.inSphere(tempArray, { radius: 220.25 });
     
     // Filter out points that are too close to center
     for (let i = 0; i < positions.length; i += 3) {
@@ -44,7 +44,7 @@ const Stars = memo((props) => {
         <PointMaterial
           transparent
           color={"#ffffff"}
-          size={0.75}
+          size={0.5}
           sizeAttenuation={true}
           depthWrite={false}
         />
