@@ -52,10 +52,19 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
 
   useEffect(() => {
     const handlePointerMove = (event) => {
-      if (!outlinePassRef.current || activeMailbox || activeFlag || isComputerActive || isArcadeActive || isTVActive) {
-        console.log("not active");
-        console.log(isComputerActive, isArcadeActive, isTVActive);
+      //if any views are active, don't show the outline pass
+      if (
+        !outlinePassRef.current ||
+        activeMailbox ||
+        activeFlag ||
+        isComputerActive ||
+        isArcadeActive ||
+        isTVActive ||
+        isPrinterActive
+      ) {
+        //reset the outline pass
         selectedObjects.current = [];
+        outlinePassRef.current.selectedObjects = [];
         return;
       }
 
@@ -74,7 +83,7 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
         selectedObjects.current = [interactable];
 
         if (interactable.name == "arcade_screen") {
-          selectedObjects.current.push(interactable.parent);
+          selectedObjects.current.push(findInteractableObject(interactable.parent));
         }
 
         outlinePassRef.current.selectedObjects = selectedObjects.current;
@@ -85,8 +94,17 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
     };
 
     const handleClick = (event) => {
-      
-      if (activeMailbox || activeFlag) return;
+      //if any views are active, don't allow interaction with objects
+      if (
+        activeMailbox ||
+        activeFlag ||
+        isComputerActive ||
+        isArcadeActive ||
+        isTVActive ||
+        isPrinterActive
+      ) {
+        return;
+      }
 
       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -95,6 +113,7 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
       const intersects = raycaster.current.intersectObjects(scene.children, true);
       const interactable = intersects.map((hit) => findInteractableObject(hit.object)).find(Boolean);
      
+      //if an object is interacted with, set its state to true
       if (interactable) {
         interactedObjects((prev) => ({
           ...prev,
@@ -144,7 +163,7 @@ const RaycasterHandler = ({ outlinePassRef, controlsRef, interactedObjects, setP
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("click", handleClick);
     };
-  }, [camera, scene, outlinePassRef, activeMailbox, activeFlag, interactedObjects, setPrinterActive]);
+  }, [camera, scene, outlinePassRef, activeMailbox, activeFlag, interactedObjects, setPrinterActive, isComputerActive, isArcadeActive, isTVActive, isPrinterActive]);
 
   useEffect(() => {
     const handleEscape = (e) => {
