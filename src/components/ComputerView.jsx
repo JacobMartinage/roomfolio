@@ -16,10 +16,10 @@ const ComputerView = ({ isActive, controlsRef }) => {
   });
 
   // Target position for the computer view
-  const targetPosition = isActive ? new THREE.Vector3(-1.1, 4.5, -2.7) : initialCamera.position;
+  const targetPosition = isActive ? new THREE.Vector3(-1.4, 4.55, -3.5) : initialCamera.position;
   const targetQuaternion = isActive
     ? new THREE.Quaternion().setFromEuler(
-        new THREE.Euler(0 * Math.PI / 180, 15 * Math.PI / 180, 0)
+        new THREE.Euler(0 * Math.PI / 180, 13.5 * Math.PI / 180, 0)
       )
     : initialCamera.quaternion;
 

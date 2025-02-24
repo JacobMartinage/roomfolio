@@ -60,7 +60,7 @@ function RoomModel({ isComputerActive, isArcadeActive, isTVActive }) {
        {/* The main GLTF object */}
        {screenTransforms.computer && (
         <group
-          position={[-1.93,4.6,-4.95]}
+          position={[-1.91,4.63,-4.95]}
           rotation={[0,Math.PI/14,0]}
           scale={[0.062,0.05,0.1]}
           // scale everything down (try 0.01, or see what fits)
@@ -75,9 +75,9 @@ function RoomModel({ isComputerActive, isArcadeActive, isTVActive }) {
           >
             <iframe
               occlude="blending"
-              src="https://example.com/simple-arcade"
+              src="https://jacobmartinage.github.io/cob-95/"
               width={1600}
-              height={900}
+              height={885}
               style={{ border: "none" }}
               name="Computer"
             />
