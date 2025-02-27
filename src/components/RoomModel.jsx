@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { useEffect, useState } from "react";
 
 function RoomModel({ isComputerActive, isArcadeActive, isTVActive }) {
-  const gltf = useLoader(GLTFLoader, "/models/SpaceRoom4.glb");
+  const gltf = useLoader(GLTFLoader, "/models/spaceRoom.glb");
 
   // We'll store each screen's transform in state after the GLTF loads
   const [screenTransforms, setScreenTransforms] = useState({

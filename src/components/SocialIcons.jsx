@@ -13,7 +13,8 @@ const SocialIcon = memo(({ position, texture, url, color, name }) => {
   decal.premultiplyAlpha = true;
   decal.needsUpdate = true;
 
-  const handleClick = () => {
+  const handleClick = (event) => {
+    event.stopPropagation();
     window.open(url, '_blank');
   };
 
