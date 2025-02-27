@@ -130,7 +130,7 @@ function RoomModel({ isComputerActive, isArcadeActive, isTVActive }) {
             style={{ pointerEvents: isArcadeActive ? 'auto' : 'none' }}
           >
             <iframe
-              src="https://example.com/simple-arcade"
+              src="https://jacobmartinage.github.io/simple-arcade/"
               width={1200}
               height={1200}
               style={{ border: "none" }}              
