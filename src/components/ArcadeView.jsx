@@ -16,7 +16,7 @@ const ArcadeView = ({ isActive, controlsRef }) => {
   });
 
   // Target position for the arcade view
-  const targetPosition = isActive ? new THREE.Vector3(-2.1, 6.3, 9.4) : initialCamera.position;
+  const targetPosition = isActive ? new THREE.Vector3(-2.5, 6.3, 9.4) : initialCamera.position;
   const targetQuaternion = isActive
     ? new THREE.Quaternion().setFromEuler(
         new THREE.Euler(0, 90 * Math.PI / 180, 0)
