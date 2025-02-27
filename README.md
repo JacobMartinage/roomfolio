@@ -1,8 +1,15 @@
-# React + Vite
+# My Room in Space
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+See it live at: https://jacobmartinage.com/
 
-Currently, two official plugins are available:
+This is my space themed 3d portfolio! Hovering over objects on the scene will show highlights on those that are interactable
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+There are 3 different iframed used all connected to different sites all of which were written by me:
+
+Mock Windows-95: https://github.com/JacobMartinage/cob-95
+
+Arcade: https://github.com/JacobMartinage/simple-arcade
+
+Retro-TV: https://github.com/JacobMartinage/2d-site
+
+I hope you enjoy!
