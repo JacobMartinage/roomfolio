@@ -26,12 +26,8 @@ export default function Minimal() {
             <span className="text-cyan-400">.</span>
           </h1>
           <div className="text-gray-400 text-sm sm:text-base space-y-1">
-            <p>{contact.email} • {contact.phone}</p>
             <p>
-              <a href={`https://${contact.website}`} className="underline">
-                {contact.website}
-              </a>{" "}
-              •{" "}
+              {contact.email} •{" "}
               <a href={`https://${contact.linkedin}`} className="underline">
                 LinkedIn
               </a>{" "}

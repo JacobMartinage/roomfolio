@@ -28,21 +28,21 @@ export default function Timeline({ data = [] }) {
           <time className="block text-sm text-cyan-300">{item.range}</time>
 
           {/* organization / institution */}
-          <h3 className="mt-1 flex items-center gap-2">
+          <h3 className="mt-0 flex items-center gap-2">
             <span className="text-lg font-semibold text-white">{item.org}</span>
           </h3>
 
           {item.title && (
-            <p className="text-sm text-gray-300 mb-2">{item.title}</p>
+            <p className="text-sm text-gray-300 mb-0">{item.title}</p>
           )}
 
           {item.location && (
-            <p className="text-xs text-gray-500 mb-2">{item.location}</p>
+            <p className="text-xs text-gray-500 mb-1">{item.location}</p>
           )}
 
           {/* work bullets */}
           {item.bullets && (
-            <ul className="list-disc ml-5 space-y-1 text-sm text-gray-400 mb-2">
+            <ul className="list-disc ml-5 space-y-1 text-sm text-gray-400 mb-1">
               {item.bullets.map((b) => (
                 <li key={b}>{b}</li>
               ))}
