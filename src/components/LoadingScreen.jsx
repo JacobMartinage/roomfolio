@@ -33,7 +33,7 @@ const LoadingScreen = ({ onLoaded }) => {
       <div className="space-background"></div> 
 
       <div className="loading-content">
-        <h1 className="portfolio-title">Jacob Martinage's Portfolio</h1>
+        <h1 className="portfolio-title">My Portfolio in 3D</h1>
 
         {!loadingComplete ? (
           <>

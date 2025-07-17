@@ -110,7 +110,7 @@ const VTFlagView = ({ isActive, onClose, controlsRef }) => {
 
           <h2 style={{ fontSize: "28px", fontWeight: "bold" }}>🎓 Virginia Tech</h2>
           <p style={{ fontSize: "18px", marginTop: "10px" }}>📅 Expected Graduation: <b>May 2026</b></p>
-          <p style={{ fontSize: "18px", marginTop: "5px" }}>📊 GPA: <b>3.7</b></p>
+          <p style={{ fontSize: "18px", marginTop: "5px" }}>📊 GPA: <b>3.4</b></p>
 
           <h3 style={{ marginTop: "15px", fontSize: "24px", fontWeight: "bold" }}>Relevant Courses:</h3>
           <ul style={{ listStyle: "none", padding: 0, fontSize: "16px" }}>
