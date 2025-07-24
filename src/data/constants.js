@@ -18,6 +18,7 @@ export const contact = {
         "VTHacks",
         "VT Artificial Intelligence & Machine Learning",
         "HackViolet",
+        "BOLT",
       ],
       courses: [
         "Discrete Math",
@@ -28,6 +29,22 @@ export const contact = {
       ],
       logo: "/images/vtlogo.png",
     },
+    {
+      range: "May 2025 – Jul 2025",
+      org: "Stanford University (via DeepLearning.AI)",
+      title: "Machine Learning Specialization",
+      location: "Online",
+      expectedGraduation: null,
+      courses: [
+        "Supervised Machine Learning: Regression and Classification",
+        "Advanced Learning Algorithms",
+        "Unsupervised Learning, Recommenders, Reinforcement Learning",
+      ],
+      logo: "/images/stanford.png",
+      certificate: "https://www.coursera.org/account/accomplishments/specialization/GFDO0AG9POUD",
+    },
+    
+    
   ];
   
   export const workData = [
@@ -54,7 +71,7 @@ export const contact = {
       logo: "/images/GA-I3.jpg",
     },
     {
-      range:    "May 2024 – June 2025",
+      range:    "May 2024 – Present",
       org:      "Project Torch (VP & Co‑Founder)",
       title:    "Vice‑President & Co‑Founder",
       location: "Blacksburg, VA",
@@ -66,7 +83,7 @@ export const contact = {
       logo: "/images/torch.png",
     },
     {
-      range:    "Jan 2024 – Present",
+      range:    "Jan 2024 – June 2025",
       org:      "P.R.I.M.E Lab, Virginia Tech",
       title:    "Research Assistant",
       location: "Blacksburg, VA",
@@ -114,6 +131,18 @@ export const contact = {
       ],
       tech: ["Python","JavaScript","AI/ML","Twilio"],
       link: null,
+    },
+    {
+      name:  "Wheelie Control System",
+      date:  "Apr 2025",
+      desc:  "Designed a real-time control system to stabilize and limit motorcycle wheelies for improved rider safety",
+      bullets: [
+        "Implemented an onboard IMU-based feedback loop to detect lift angles",
+        "Built a PID control algorithm to dynamically adjust throttle output",
+        "Tested system on simulation and prototype rig, reducing unintended wheelies by 80%",
+      ],
+      tech:   ["C++", "Python", "Embedded Systems", "PID Control", "IMU", "ROS"],
+      source: null,
     },
   ];
   

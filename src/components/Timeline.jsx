@@ -76,6 +76,18 @@ export default function Timeline({ data = [] }) {
               </ul>
             </>
           )}
+
+          {item.certificate && (
+            <a 
+              href={item.certificate} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-block px-4 py-2 mt-2 text-sm font-semibold text-white bg-blue-600 rounded hover:bg-blue-700 transition duration-200"
+            >
+              View Certificate
+            </a>
+          )}
+
         </li>
       ))}
     </ul>
