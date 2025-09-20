@@ -54,7 +54,9 @@ export const contact = {
         title:    "Software Engineering Intern",
         location: "Remote",
         bullets: [
-          "Summer and Fall 2025 Intern"
+          "Current Internship going through December 2025, working on automating core processes used by 400+ airlines",
+          "Developed an internal tool that reduced deployment time for new feeds by 85% and cut my teams' cloud operation costs by 11%",
+          "Built and maintained Python scripts and CI workflows to automate testing across 30+ services",
         ],
         logo:     "/images/atpco.png",
     },
